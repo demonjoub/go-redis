@@ -55,7 +55,14 @@ func main() {
 		}
 		name := m.Name
 		age := m.Age
-		set(client, name, Author{Name: name, Age: age})
+		err := set(client, name, Author{Name: name, Age: age})
+		if err != nil {
+			return c.JSON(http.StatusOK, map[string]interface{}{
+				"status": "FAIL",
+				"name":   name,
+				"age":    age,
+			})
+		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"status": "OK",
